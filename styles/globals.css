@@ -1,0 +1,140 @@
+@font-face {
+  font-family: 'Audrey';
+  src: url('/fonts/Audrey.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', 'Open Sans', Arial, sans-serif;
+  background: #FFFDF9;
+  color: #2D2A2A;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #FFFDF9;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Audrey', serif;
+  font-family: 'Playfair Display', serif;
+  color: #2D2A2A;
+  margin-top: 0;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: 2.8rem;
+  color: #BFA76A;
+  margin-bottom: 0.3em;
+}
+h2 {
+  font-size: 2rem;
+  color: #7D8B6A;
+  margin-bottom: 0.7em;
+}
+h3 {
+  font-size: 1.2rem;
+  color: #BFA76A;
+  margin-bottom: 0.4em;
+}
+
+
+button {
+  border-radius: 6px;
+  font-family: 'Lato', 'Open Sans', Arial, sans-serif;
+  border: 1.5px solid #EAD7B7;
+  background: #FFFDF9;
+  color: #BFA76A;
+  border-radius: 24px;
+  padding: 0.75em 2em;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border 0.25s, box-shadow 0.25s;
+  font-size: 1rem;
+  font-weight: 400;
+  box-shadow: 0 2px 8px rgba(234, 215, 183, 0.08);
+  outline: none;
+}
+button:hover, button:focus {
+  background: #F8E1E7;
+  color: #7D8B6A;
+  border-color: #E1C9A6;
+  box-shadow: 0 4px 18px rgba(191, 167, 106, 0.09);
+}
+
+
+input, textarea, select {
+  border-radius: 6px;
+  font-family: 'Lato', 'Open Sans', Arial, sans-serif;
+  border: 1px solid #EAD7B7;
+  border-radius: 12px;
+  padding: 0.85em;
+  font-size: 1rem;
+  background: #FFFDF9;
+  margin-bottom: 1em;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #B3D0B3;
+  box-shadow: 0 0 0 2px #C8D8C8;
+}
+
+::selection {
+  background: #B3D0B3;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 2.1rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  body, html {
+    font-size: 15px;
+  }
+  main {
+    padding: 0 0.5rem 2rem 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.1rem;
+  }
+  main {
+    padding: 0 0.2rem 1.5rem 0.2rem;
+  }
+}
