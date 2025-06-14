@@ -55,7 +55,7 @@ export default function RSVPSection() {
           position: relative;
           padding: 0;
           min-height: 420px;
-          background: linear-gradient(rgba(183,197,170,0.82), rgba(255,255,255,0.85)), url('/rsvp.JPG') center center/cover no-repeat;
+          background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9)), url('/rsvp.JPG') center center/cover no-repeat;
           width: 100vw;
           margin-left: calc(50% - 50vw);
           margin-right: calc(50% - 50vw);
