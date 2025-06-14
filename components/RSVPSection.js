@@ -1,49 +1,53 @@
-import React, { useState } from "react";
-import useFadeInOnScroll from '../hooks/useFadeInOnScroll';
+import React, { useState, useEffect } from "react";
 
 export default function RSVPSection() {
   const [showForm, setShowForm] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const fadeRef = useFadeInOnScroll();
+  const formRef = React.useRef(null);
+
+  useEffect(() => {
+    const openForm = () => setShowForm(true);
+    window.addEventListener('openRSVPForm', openForm);
+    return () => window.removeEventListener('openRSVPForm', openForm);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (showForm && formRef.current && !formRef.current.contains(e.target)) {
+        setShowForm(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showForm]);
+
   return (
-    <section className="rsvp-section">
+    <section id="rsvpSection" className="rsvp-section">
       <div className="rsvp-overlay">
         <h2>Confirmación de asistencia</h2>
-        <div className="fade-in" ref={fadeRef}>
-          <div className="rsvp-center">
-            <button className="rsvp-btn" onClick={() => setShowForm(!showForm)}>
+        <div className="rsvp-center">
+          {!showForm && (
+            <button className="rsvp-btn" onClick={() => setShowForm(true)}>
               Confirmar asistencia
             </button>
-          </div>
-          {showForm && !submitted && (
-            <form className="rsvp-form" onSubmit={e => { e.preventDefault(); setSubmitted(true); }}>
-              <input type="text" name="nombre" placeholder="Nombre y apellidos" required />
-              <input type="email" name="email" placeholder="Correo electrónico" required />
-              <input type="text" name="direccion" placeholder="Dirección postal" required />
-              <select name="asistencia" required>
-                <option value="">Asistencia</option>
-                <option value="ceremonia">Solo ceremonia</option>
-                <option value="todo">Ceremonia y convite</option>
-              </select>
-              <input type="text" name="intolerancias" placeholder="Intolerancias alimentarias" />
-              <select name="autobus">
-                <option value="">¿Necesidad de autobús?</option>
-                <option value="ida">Solo ida</option>
-                <option value="vuelta">Solo vuelta</option>
-                <option value="ambos">Ambos</option>
-                <option value="ninguno">Ninguno</option>
-              </select>
-              <input type="text" name="musica" placeholder="Sugerencias musicales" />
-              <input type="number" name="ninos" placeholder="¿Asiste con niños? ¿Cuántos?" min="0" />
-              <textarea name="comentarios" placeholder="Comentarios o preguntas adicionales" rows={3} />
-              <button type="submit" className="rsvp-btn">Enviar</button>
-            </form>
           )}
-        {submitted && (
-          <div className="rsvp-thanks">
-            <p>¡Gracias por confirmar tu asistencia!<br/>Nos pondremos en contacto contigo pronto.</p>
-          </div>
-        )}
+        </div>
+        <div ref={formRef} className={`rsvp-form-embed${showForm ? ' open' : ''}${!showForm ? ' closed' : ''}`}
+          aria-hidden={!showForm}
+        >
+          <iframe
+            src="https://forms.gle/Z6ARPPji9Uqgr8kr8"
+            width="100%"
+            height="750"
+            frameBorder="0"
+            marginHeight="0"
+            marginWidth="0"
+            title="Confirmación de asistencia"
+            style={{background: 'white', borderRadius: '18px', boxShadow: '0 4px 16px rgba(156, 163, 175, 0.11)'}}
+            allowFullScreen
+            tabIndex={showForm ? 0 : -1}
+          >
+            Cargando…
+          </iframe>
         </div>
       </div>
       <style jsx>{`
@@ -72,31 +76,65 @@ export default function RSVPSection() {
           font-size: 2.2rem;
           margin-bottom: 2.5rem;
         }
-        .rsvp-center {
+        .rsvp-form-embed {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
           display: flex;
           justify-content: center;
-          margin-bottom: 2.5rem;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(32px) scale(0.98);
+          transition: opacity 0.45s cubic-bezier(.4,0,.2,1), transform 0.45s cubic-bezier(.4,0,.2,1);
+          height: 0;
+          overflow: hidden;
+        }
+        .rsvp-form-embed.open {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateY(0) scale(1);
+          height: auto;
+          margin-top: 1.3rem;
+          margin-bottom: 1.3rem;
+        }
+        .rsvp-form-embed.closed {
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(32px) scale(0.98);
+          height: 0;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        @media (max-width: 700px) {
+          .rsvp-form-embed,
+          .rsvp-form-embed.open {
+            max-width: 99vw;
+          }
+          .rsvp-form-embed iframe {
+            min-height: 480px;
+            height: 70vw;
+          }
         }
         .rsvp-btn {
-          border: 1.5px solid #EAD7B7;
+          border: 1.5px solid #B8C2B9;
           background: #FFFDF9;
-          color: #BFA76A;
+          color: #6B8E7E;
           border-radius: 24px;
           padding: 0.8em 2.5em;
           font-size: 1.15rem;
           font-family: 'Lato', 'Open Sans', Arial, sans-serif;
           font-weight: 600;
-          box-shadow: 0 2px 8px rgba(234,215,183,0.08);
+          box-shadow: 0 2px 8px rgba(107, 142, 126, 0.1);
           transition: background 0.2s, color 0.2s, border 0.2s;
         }
         .rsvp-btn:hover {
-          background: #F8E1E7;
-          border-color: #E1C9A6;
+          background: #F0F5F1;
+          border-color: #8BA393;
         }
         .rsvp-form {
           max-width: 480px;
           margin: 0 auto;
-          background: #FAF7F1;
+          background: #F9FAFB;
           border-radius: 18px;
           box-shadow: 0 4px 16px rgba(234,215,183,0.11);
           padding: 2.5rem 2rem 2rem 2rem;
@@ -107,11 +145,11 @@ export default function RSVPSection() {
         .rsvp-form input,
         .rsvp-form select,
         .rsvp-form textarea {
-          border: 1px solid #EAD7B7;
+          border: 1px solid #B8C2B9;
           border-radius: 12px;
           padding: 0.85em;
           font-size: 1rem;
-          background: #FFFDF9;
+          background: #FFFFFF;
           font-family: 'Lato', 'Open Sans', Arial, sans-serif;
         }
         .rsvp-form textarea {
@@ -120,9 +158,9 @@ export default function RSVPSection() {
         .rsvp-thanks {
           max-width: 480px;
           margin: 0 auto;
-          background: #FAF7F1;
+          background: #F9FAFB;
           border-radius: 18px;
-          box-shadow: 0 4px 16px rgba(234,215,183,0.11);
+          box-shadow: 0 4px 16px rgba(107, 142, 126, 0.12);
           padding: 2.5rem 2rem 2rem 2rem;
           text-align: center;
           color: #7D8B6A;

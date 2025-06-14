@@ -10,7 +10,7 @@ const Hero = styled.section`
   /* Siempre prioriza la parte superior de la imagen */
   text-align: center;
   position: relative;
-  box-shadow: 0 2px 16px rgba(234, 215, 183, 0.10);
+  box-shadow: 0 2px 16px rgba(107, 142, 126, 0.1);
   padding: 3.5rem 0 3.5rem 0;
   @media (max-width: 700px) {
     padding: 2.2rem 1.5rem 2.5rem 1.5rem;
@@ -44,19 +44,19 @@ const Date = styled.p`
 
 const Button = styled.a`
   display: inline-block;
-  border: 1.5px solid #EAD7B7;
+  border: 1.5px solid #B8C2B9;
   border-radius: 24px;
   padding: 0.8em 2.2em;
-  background: #fffdf9cc;
+  background: #F5F9F6;
   color: #2D2A2A;
   font-family: 'Lato', sans-serif;
   font-size: 1.1rem;
   text-decoration: none;
   transition: background 0.2s, border 0.2s;
-  box-shadow: 0 2px 8px rgba(234, 215, 183, 0.08);
+  box-shadow: 0 2px 8px rgba(107, 142, 126, 0.1);
   &:hover {
-    background: #F8E1E7;
-    border-color: #E1C9A6;
+    background: #F0F5F1;
+    border-color: #8BA393;
   }
 `;
 
@@ -75,8 +75,8 @@ export default function HeroSection() {
     <Hero id="hero">
       <div>
         <div className="fade-in" ref={fadeRef}>
-          <Names>Gustavo & Laura</Names>
-          <div style={{fontFamily: 'Lato, serif', color: '#BFA76A', fontSize: '1.35rem', fontStyle: 'italic', marginBottom: '0.7em', letterSpacing: '0.01em'}}>“El Amor vence siempre”<br/><span style={{fontSize:'1.01rem', color:'#7D8B6A', fontStyle:'normal'}}>San Juan Pablo II</span></div>
+          <Names>Gustavo y Laura</Names>
+          <div style={{fontFamily: 'Lato, serif', color: '#6B8E7E', fontSize: '1.35rem', fontStyle: 'italic', marginBottom: '0.7em', letterSpacing: '0.01em'}}>"El Amor vence siempre"<br/><span style={{fontSize:'1.01rem', color:'#8BA393', fontStyle:'normal'}}>San Juan Pablo II</span></div>
           <Date>22 de noviembre de 2025</Date>
         </div>
       </div>

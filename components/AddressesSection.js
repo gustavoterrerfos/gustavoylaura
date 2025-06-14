@@ -1,132 +1,263 @@
 import React from "react";
+import { FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import useFadeInOnScroll from '../hooks/useFadeInOnScroll';
 
 export default function AddressesSection() {
   const fadeRef = useFadeInOnScroll();
+  
   return (
-    <section className="addresses-section">
-      <div className="addresses-flex">
-        <div className="addresses-content-side fade-in" ref={fadeRef}>
-          <h2>Nuestra info</h2>
-          <div className="addresses-cards">
-            <div className="address-card">
-              <h3>Gustavo</h3>
-              <p>Calle Cirilo Amorós 69<br/>piso 2, puerta 4<br/>Valencia, 46004</p>
-              <p style={{color:'#5F805F',marginTop:'0.4em',fontSize:'1.07em'}}><span role="img" aria-label="tel">📞</span> 693231823</p>
-            </div>
-            <div className="address-card">
-              <h3>Laura</h3>
-              <p>Avenida de Aragón 4<br/>piso 7, puerta 12<br/>Valencia, 46021</p>
-              <p style={{color:'#5F805F',marginTop:'0.4em',fontSize:'1.07em'}}><span role="img" aria-label="tel">📞</span> 722525224</p>
+    <section className="section" style={{ 
+      background: 'var(--color-background)',
+      padding: '100px 0 150px',  /* Aumentado el padding inferior */
+      margin: '-80px 0 -40px',  /* Adjusted bottom margin */
+      overflow: 'visible',
+      position: 'relative',
+      zIndex: 1
+    }}>
+      <div className="container">
+        <h2 className="section-title">Nuestra información</h2>
+        
+        <div className="addresses-container">
+          <div className="addresses-image" ref={fadeRef}>
+            <div className="image-container">
+              <div className="annotated-image">
+                <img 
+                  src="/Evento.JPG" 
+                  alt="Gustavo y Laura celebrando juntos" 
+                  className="elegant-image"
+                />
+                
+                {/* Gustavo Info */}
+                <div className="info-box gustavo">
+                  <h4>Gustavo</h4>
+                  <p>C/ Cirilo Amorós 69,<br />piso 2 puerta 4</p>
+                  <p>Valencia, 46004</p>
+                  <p>693 231 823</p>
+                </div>
+                
+                {/* Laura Info */}
+                <div className="info-box laura">
+                  <h4>Laura</h4>
+                  <p>Av. Aragón 4, piso 7 puerta 12</p>
+                  <p>Valencia, 46021</p>
+                  <p>722 525 224</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="addresses-img-side">
-          <img src="/Dirección.JPG" alt="Dirección de Gustavo y Laura" />
-        </div>
       </div>
+
       <style jsx>{`
-        .addresses-section {
-          background: #fff;
-          padding: 0;
-          width: 100vw;
-          margin-left: calc(50% - 50vw);
-          margin-right: calc(50% - 50vw);
-        }
-        .addresses-flex {
-          display: flex;
-          flex-direction: row;
-          min-height: 340px;
-          width: 100%;
-        }
-        .addresses-content-side {
-          flex: 1 1 50%;
-          min-width: 0;
-          padding: 4rem 3vw 4rem 3vw;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: flex-start;
-        }
-        .addresses-content-side h2 {
+        .section-title {
           text-align: center;
-          color: #5F805F;
-          font-size: 2.2rem;
-          margin: 2.2rem 0 2.5rem 0;
           width: 100%;
+          margin-bottom: 2rem;
         }
-        @media (max-width: 900px) {
-          .addresses-content-side h2 {
-            margin: 2.2rem 0 2.5rem 0;
-          }
-        }
-        .addresses-cards {
+        
+        .addresses-container {
           display: flex;
           justify-content: center;
-          gap: 2.5rem;
-          flex-wrap: wrap;
-        }
-        .addresses-img-side {
-          flex: 1 1 50%;
-          min-width: 0;
-          display: flex;
-          align-items: stretch;
-          justify-content: stretch;
+          align-items: center;
+          min-height: 500px;
+          border-radius: 0;
+          overflow: hidden;  /* Cambiado a hidden para evitar scroll horizontal */
+          background: #fff;
+          width: 100vw;
           position: relative;
-          overflow: hidden;
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;
+          margin-right: -50vw;
         }
-        .addresses-img-side img {
+        
+        /* Annotated Image Styles */
+        .addresses-image {
+          flex: 1;
+          position: relative;
+          min-height: 500px;
+          display: flex;
+          align-items: flex-start;
+          justify-content: center;
+          width: 100%;
+          padding: 100px 0 150px;  /* Aumentado el padding inferior */
+          background: none;
+          overflow: visible;
+          margin: -60px 0 -60px;
+        }
+        
+        .image-container {
+          position: relative;
+          width: 100%;
+          max-width: 800px;
+          height: 100%;
+          overflow: visible;
+        }
+        
+        .annotated-image {
+          position: relative;
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center 35%;
+          padding-top: 20px;  /* Added padding to help with positioning */
         }
-        .address-card {
-          background: rgba(200,216,200,0.92);
-          border-radius: 12px;
-          box-shadow: 0 4px 18px rgba(191,167,106,0.09);
-          padding: 2rem 2.5rem;
-          flex: 1 1 320px;
-          min-width: 270px;
-          max-width: 340px;
+        
+        .elegant-image {
+          width: 100%;
+          height: auto;
+          max-height: 600px;
+          object-fit: contain;  /* Cambiado de cover a contain para asegurar que toda la imagen sea visible */
+          object-position: center center;
+          display: block;
+          border-radius: 0;
+          margin: 40px auto;  /* Centrado y con margen superior */
         }
-        .address-card h3 {
-          font-size: 1.3rem;
-          color: #7D8B6A;
-          margin-bottom: 0.5em;
+        
+        @media (max-width: 768px) {
+          .elegant-image {
+            width: 150%;
+            margin-left: -25%;
+            max-height: 70vh;
+          }
+          
+          @media (max-height: 700px) {
+            .elegant-image {
+              width: 200%;
+              margin-left: -50%;
+            }
+          }
         }
-        .address-card p {
-          color: #2D2A2A;
-          font-size: 1.05rem;
+        
+        /* Info Box Styles */
+        .info-box {
+          position: absolute;
+          background: rgba(255, 255, 255, 0.95);
+          padding: 1.2rem 1.5rem;
+          border-radius: 0;
+          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+          width: 240px;
+          z-index: 10;
           margin: 0;
         }
+        
+        .info-box h4 {
+          margin: 0 0 0.5rem 0;
+          color: #5a6a4d;
+          font-size: 1.1rem;
+          font-family: 'Playfair Display', serif;
+          font-weight: 700;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 0.3rem;
+        }
+        
+        .info-box p {
+          margin: 0.4rem 0;
+          color: #4a5a3d;
+          font-size: 0.9rem;
+          font-family: 'Lato', sans-serif;
+          line-height: 1.4;
+          white-space: nowrap;
+        }
+        
+        .gustavo {
+          bottom: 0;
+          left: 0;
+          text-align: left;
+        }
+        
+        .laura {
+          top: 0;
+          right: 0;
+          text-align: right;
+        }
+        
         @media (max-width: 900px) {
-          .addresses-flex {
-            flex-direction: column-reverse;
+          .info-box {
+            width: 200px;
+            padding: 1rem;
           }
-          .addresses-img-side, .addresses-content-side {
-            flex: unset;
-            width: 100%;
-            min-width: unset;
+          
+          .gustavo {
+            bottom: 0;
+            left: 0;
           }
-          .addresses-img-side {
-            height: 220px;
-            max-height: 35vw;
-          }
-          .addresses-content-side {
-            padding: 2.5rem 1rem;
+          
+          .laura {
+            top: 0;
+            right: 0;
           }
         }
-        @media (max-width: 700px) {
-          .addresses-cards {
+        
+        .icon {
+          color: var(--color-gold);
+          font-size: 1.2rem;
+          margin-top: 0.2rem;
+          flex-shrink: 0;
+        }
+        
+        .info-item p, 
+        .info-item a {
+          color: var(--color-text);
+          margin: 0;
+          line-height: 1.6;
+          transition: color 0.3s ease;
+        }
+        
+        .info-item a {
+          color: var(--color-dark-gold);
+        }
+        
+        @media (max-width: 992px) {
+          .addresses-container {
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
           }
+          
+          .addresses-content {
+            padding: 3rem 2rem;
+          }
+          
+          .address-cards {
+            gap: 1.5rem;
+          }
+          
+          .address-card {
+            min-height: auto;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .section {
+            padding: 3rem 0;
+          }
+          
+          .section-title {
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+          }
+          
+          .addresses-content {
+            padding: 2rem 1.5rem;
+          }
+          
+          .card-front {
+            padding: 1.8rem;
+          }
+          
+          .address-card h3 {
+            font-size: 1.4rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .section-title {
+            font-size: 1.8rem;
+          }
+          
+          .address-cards {
+            flex-direction: column;
+          }
+          
           .address-card {
             width: 100%;
-            min-width: unset;
-            max-width: 95vw;
           }
         }
       `}</style>
