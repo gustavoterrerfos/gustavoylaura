@@ -7,9 +7,12 @@ export default function GiftsSection() {
     <section className="gifts-section">
       <div className="gifts-flex-container">
         <div className="gifts-content fade-in" ref={fadeRef}>
+          <h2 className="section-title" style={{ marginBottom: '1.5rem', color: '#8B6F5E' }}>Proyecto familia</h2>
           <p style={{marginBottom:'1.2em', lineHeight: '1.7', fontSize: '1.05em', color: '#6B8E7E'}}>
-            Lo más valioso para nosotros es contar con tu compañía y tus oraciones en este día tan especial.
-            Cualquier otro detalle, aunque no necesario, será recibido con el mismo cariño.
+            Lo más importante para nosotros es contar con tu compañía y tus oraciones en este día tan especial.
+          </p>
+          <p style={{marginBottom:'1.2em', lineHeight: '1.7', fontSize: '1.05em', color: '#6B8E7E'}}>
+            Pero si además te hace ilusión tener un detalle con nosotros (y no sabes dónde dejar al pobre sobre o no llevas nada suelto), te dejamos por aquí un pequeño "buzón digital":
           </p>
           <div className="bank-account" style={{
             color: '#6B8E7E',
@@ -22,8 +25,8 @@ export default function GiftsSection() {
           }}>
             <span className="no-phone-link">ES82 0186 5001 61 0525696201</span>
           </div>
-          <p style={{marginTop:'1.2em', fontSize:'0.95em', color: '#8BA393', fontStyle: 'italic'}}>
-            ¡Gracias de todo corazón!
+          <p style={{marginTop:'1.2em', fontSize:'0.9em', color: '#8BA393', fontStyle: 'italic', maxWidth: '600px'}}>
+            ¡Prometemos invertirlo en muchas cosas útiles y necesarias, como la suscripción de netflix y spotify, y algún que otro caprichito, como una cama donde dormir o una mesa donde comer!
           </p>
         </div>
       </div>
@@ -42,7 +45,7 @@ export default function GiftsSection() {
         }
         .gifts-content {
           width: 100%;
-          padding: 4rem 2rem;
+          padding: 1.5rem 2rem 3rem;
           display: flex;
           flex-direction: column;
           justify-content: center;

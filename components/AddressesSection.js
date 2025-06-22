@@ -8,8 +8,8 @@ export default function AddressesSection() {
   return (
     <section className="section" style={{ 
       background: 'var(--color-background)',
-      padding: '100px 0 150px',  /* Aumentado el padding inferior */
-      margin: '-80px 0 -40px',  /* Adjusted bottom margin */
+      padding: '60px 0 80px',
+      margin: '-40px 0 -20px',
       overflow: 'visible',
       position: 'relative',
       zIndex: 1

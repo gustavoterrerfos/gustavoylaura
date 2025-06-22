@@ -112,7 +112,6 @@ export default function InvitationSection() {
           Con mucha ilusión queremos compartir contigo este día tan importante. 
           Para nosotros, no hay mayor alegría que vivir este momento rodeados de las personas que más queremos.
         </Text>
-        <Signature>Con todo nuestro cariño,<br />Gustavo y Laura</Signature>
       </Container>
       <DecorationBottom />
     </Section>
