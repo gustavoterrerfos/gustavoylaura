@@ -6,6 +6,7 @@ import EventDetails from '../components/EventDetails';
 import RSVPSection from '../components/RSVPSection';
 import AddressesSection from '../components/AddressesSection';
 import GiftsSection from '../components/GiftsSection';
+import ThanksSection from '../components/ThanksSection';
 
 const Main = styled.main`
   max-width: 900px;
@@ -40,6 +41,7 @@ export default function Home() {
         <section id="rsvp-section-anchor" className="rsvp-section"><RSVPSection /></section>
         <section id="d"><AddressesSection /></section>
         <section id="regalos"><GiftsSection /></section>
+        <ThanksSection />
       </Main>
        <style jsx global>{`
         html {

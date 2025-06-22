@@ -32,7 +32,7 @@ export default function AddressesSection() {
                   <h4>Gustavo</h4>
                   <p>C/ Cirilo Amorós 69,<br />piso 2 puerta 4</p>
                   <p>Valencia, 46004</p>
-                  <p>693 231 823</p>
+                  <p className="phone-number">693 231 823</p>
                 </div>
                 
                 {/* Laura Info */}
@@ -40,7 +40,7 @@ export default function AddressesSection() {
                   <h4>Laura</h4>
                   <p>Av. Aragón 4, piso 7 puerta 12</p>
                   <p>Valencia, 46021</p>
-                  <p>722 525 224</p>
+                  <p className="phone-number">722 525 224</p>
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function AddressesSection() {
           padding: 100px 0 150px;  /* Aumentado el padding inferior */
           background: none;
           overflow: visible;
-          margin: -60px 0 -60px;
+          margin: -80px 0 -60px;  /* Aumentado el margen superior negativo */
         }
         
         .image-container {
@@ -164,10 +164,11 @@ export default function AddressesSection() {
           text-align: left;
         }
         
-        .laura {
-          top: 0;
-          right: 0;
+        .info-box.laura {
+          top: -35px;  /* Ajustado a -35px desde la parte superior */
+          right: 0;  /* Sin margen derecho */
           text-align: right;
+          position: absolute;
         }
         
         @media (max-width: 900px) {

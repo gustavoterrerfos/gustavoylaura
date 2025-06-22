@@ -1,4 +1,4 @@
-import Document from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -25,5 +25,48 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html lang="es">
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+          <meta name="format-detection" content="telephone=no" />
+          <style jsx global>{`
+            /* Evita el zoom en inputs en iOS */
+            @media screen and (-webkit-min-device-pixel-ratio: 0) {
+              input[type="text"],
+              input[type="email"],
+              input[type="tel"],
+              input[type="number"],
+              input[type="date"],
+              input[type="time"],
+              textarea,
+              select {
+                font-size: 16px !important;
+              }
+            }
+            
+            /* Asegura que los inputs mantengan un tamaño de fuente legible */
+            input, textarea, select {
+              font-size: 16px !important;
+            }
+            
+            /* Mejora la experiencia de desplazamiento en iOS */
+            html {
+              -webkit-text-size-adjust: 100%;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+              text-rendering: optimizeLegibility;
+            }
+          `}</style>
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }

@@ -46,9 +46,18 @@ export default function App({ Component, pageProps }) {
           href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" 
           rel="stylesheet" 
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="format-detection" content="address=no" />
+        <meta name="format-detection" content="email=no" />
+        <meta name="format-detection" content="date=no" />
         <style jsx global>{`
           html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
           }
           body {
             margin: 0;
@@ -78,6 +87,53 @@ export default function App({ Component, pageProps }) {
             cursor: pointer;
             font-family: ${theme.fonts.sans};
             transition: ${theme.transitions.hover};
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          /* Estilos para inputs en móviles */
+          input, textarea, select {
+            font-size: 16px !important;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+            border-radius: 0;
+          }
+          
+          /* Evita el zoom en iOS */
+          @supports (-webkit-overflow-scrolling: touch) {
+            input, textarea {
+              font-size: 16px !important;
+            }
+          }
+          
+          /* Mejora el espaciado en formularios móviles */
+          form {
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          /* Asegura que los botones de los formularios sean táctiles */
+          button, input[type="button"], input[type="submit"] {
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          /* Previene que los números se conviertan en enlaces */
+          a[href^="tel"],
+          a[href^="sms"],
+          a[href*="bank"],
+          a[href*="cuenta"],
+          .no-phone-link {
+            color: inherit !important;
+            text-decoration: none !important;
+            pointer-events: none;
+            cursor: default;
+          }
+          
+          /* Estilo específico para números de teléfono y cuentas */
+          .phone-number, .bank-account {
+            color: inherit;
+            text-decoration: none;
+            pointer-events: none;
           }
           .container {
             width: 100%;

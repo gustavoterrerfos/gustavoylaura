@@ -11,7 +11,7 @@ export default function GiftsSection() {
             Lo más valioso para nosotros es contar con tu compañía y tus oraciones en este día tan especial.
             Cualquier otro detalle, aunque no necesario, será recibido con el mismo cariño.
           </p>
-          <div style={{
+          <div className="bank-account" style={{
             color: '#6B8E7E',
             fontSize: '0.85em',
             margin: '1.5em 0',
@@ -20,7 +20,7 @@ export default function GiftsSection() {
             borderBottom: '1px solid #B8C2B9',
             letterSpacing: '0.5px'
           }}>
-            ES82 0186 5001 61 0525696201
+            <span className="no-phone-link">ES82 0186 5001 61 0525696201</span>
           </div>
           <p style={{marginTop:'1.2em', fontSize:'0.95em', color: '#8BA393', fontStyle: 'italic'}}>
             ¡Gracias de todo corazón!
