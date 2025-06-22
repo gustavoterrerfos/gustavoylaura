@@ -63,6 +63,7 @@ export default function GiftsSection() {
           }
           .gifts-content {
             padding: 3rem 1rem;
+          }
         }
       `}</style>
     </section>

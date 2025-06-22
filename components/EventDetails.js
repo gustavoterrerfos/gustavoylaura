@@ -94,6 +94,25 @@ export default function EventDetails() {
         color: '#8BA393',
         opacity: 0.9
       }}/><span style={{color: '#6B8E7E'}}>{d.place}</span></p>
+      {d.title === 'Convite' && (
+        <p style={{
+          margin: '0.5em 0 0 0',
+          fontSize: '0.9em',
+          color: '#8BA393',
+          display: 'flex',
+          alignItems: 'flex-start',
+          lineHeight: '1.5'
+        }}>
+          <span style={{
+            display: 'inline-flex',
+            marginRight: '0.5em',
+            color: '#8BA393',
+            fontSize: '1.1em',
+            marginTop: '0.15em'
+          }}>Ⓟ</span>
+          <span style={{color: '#6B8E7E'}}>Parking disponible en la propia masía</span>
+        </p>
+      )}
       {d.title === 'Ceremonia' && (
         <p style={{
           margin: '0.5em 0 0 0',
