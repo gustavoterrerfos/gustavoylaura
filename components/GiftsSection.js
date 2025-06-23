@@ -12,7 +12,7 @@ export default function GiftsSection() {
             Lo más importante para nosotros es contar con tu compañía y tus oraciones en este día tan especial.
           </p>
           <p style={{marginBottom:'1.2em', lineHeight: '1.7', fontSize: '1.05em', color: '#6B8E7E'}}>
-            Pero si además te hace ilusión tener un detalle con nosotros (y no sabes dónde dejar al pobre sobre o no llevas nada suelto), te dejamos por aquí un pequeño "buzón digital":
+            Pero si además queréis tener un detalle, cualquier ayuda para nuestro proyecto familiar será recibida con mucho cariño.
           </p>
           <div className="bank-account" style={{
             color: '#6B8E7E',

@@ -33,6 +33,24 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
           <meta name="format-detection" content="telephone=no" />
+          
+          {/* Open Graph / Facebook */}
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://tudominio.com/" />
+          <meta property="og:title" content="Boda de Gustavo y Laura" />
+          <meta property="og:description" content="22 de noviembre de 2025 - Únete a nosotros para celebrar nuestro amor" />
+          <meta property="og:image" content="https://tudominio.com/Portada.JPG" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="800" />
+          <meta property="og:image:alt" content="Gustavo y Laura - 22 de noviembre de 2025" />
+          
+          {/* Twitter */}
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:url" content="https://tudominio.com/" />
+          <meta property="twitter:title" content="Boda de Gustavo y Laura" />
+          <meta property="twitter:description" content="22 de noviembre de 2025 - Únete a nosotros para celebrar nuestro amor" />
+          <meta property="twitter:image" content="https://tudominio.com/Portada.JPG" />
+          <meta property="twitter:image:alt" content="Gustavo y Laura - 22 de noviembre de 2025" />
           <style jsx global>{`
             /* Evita el zoom en inputs en iOS */
             @media screen and (-webkit-min-device-pixel-ratio: 0) {
