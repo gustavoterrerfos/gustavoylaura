@@ -9,12 +9,19 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+  console.log('Solicitud recibida:', req.method, req.url);
   try {
     if (req.method === 'GET') {
+      console.log('Obteniendo lista de regalos...');
       const gifts = await getGifts();
+      console.log('Regalos obtenidos:', gifts);
+      
       if (!gifts || !Array.isArray(gifts)) {
+        console.error('No se pudieron obtener los regalos o el formato es incorrecto');
         throw new Error('No se pudieron obtener los regalos');
       }
+      
+      console.log('Enviando respuesta con', gifts.length, 'regalos');
       return res.status(200).json({ gifts });
     }
 

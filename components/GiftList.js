@@ -100,17 +100,30 @@ export default function GiftList() {
     const fetchGifts = async () => {
       try {
         setLoading(true);
+        setError(null);
+        console.log('Iniciando solicitud de regalos...');
+        
         const response = await fetch('/api/gifts');
+        console.log('Respuesta recibida:', response.status, response.statusText);
         
         if (!response.ok) {
-          throw new Error('Error al cargar los regalos');
+          const errorText = await response.text();
+          console.error('Error en la respuesta:', errorText);
+          throw new Error(`Error al cargar los regalos: ${response.status} ${response.statusText}`);
         }
         
         const data = await response.json();
-        setGifts(data.gifts || []);
+        console.log('Datos recibidos:', data);
+        
+        if (!data.gifts || !Array.isArray(data.gifts)) {
+          console.error('Formato de datos inválido:', data);
+          throw new Error('Formato de datos inválido recibido del servidor');
+        }
+        
+        setGifts(data.gifts);
       } catch (err) {
-        console.error('Error:', err);
-        setError(err.message || 'Error al cargar los regalos');
+        console.error('Error al cargar los regalos:', err);
+        setError(err.message || 'Error al cargar los regalos. Por favor, recarga la página o inténtalo más tarde.');
       } finally {
         setLoading(false);
       }
@@ -178,11 +191,27 @@ export default function GiftList() {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Cargando regalos...</div>;
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.loadingSpinner}></div>
+        <p>Cargando lista de regalos...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className={styles.error}>Error: {error}</div>;
+    return (
+      <div className={styles.errorContainer}>
+        <h3>¡Ups! Algo salió mal</h3>
+        <p>{error}</p>
+        <button 
+          className={styles.retryButton}
+          onClick={() => window.location.reload()}
+        >
+          Reintentar
+        </button>
+      </div>
+    );
   }
 
   return (
