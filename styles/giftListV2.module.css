@@ -1,0 +1,461 @@
+/* Contenedor principal */
+.giftListContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  background: #fff9f2;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
+  min-height: 400px;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #6B5A4D;
+}
+
+.error {
+  color: #e53e3e;
+}
+
+/* Carrusel */
+.carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 2rem 1rem;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Tarjeta de regalo */
+.giftCard {
+  flex: 0 0 280px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 380px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Parte frontal de la tarjeta */
+.cardFront {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+  z-index: 2;
+}
+
+.giftCard.expanded .cardFront {
+  transform: translateY(-100%);
+}
+
+.imageContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.giftCard:hover .image {
+  transform: scale(1.05);
+}
+
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.giftCard h3 {
+  font-size: 1.1rem;
+  color: #2d3748;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.4;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Botón de información */
+.infoButton {
+  display: block;
+  width: 100%;
+  background: #8B6F5E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  margin-top: auto;
+}
+
+.infoButton:hover {
+  background: #6B5A4D;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Parte trasera de la tarjeta (detalles) */
+.cardBack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: white;
+  padding: 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  overflow-y: auto;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.giftCard.expanded .cardBack {
+  transform: translateY(0);
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #6B5A4D;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: #f0e6dd;
+  transform: rotate(90deg);
+}
+
+.details {
+  margin-top: 2rem;
+}
+
+.description {
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.price {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.progressContainer {
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  height: 8px;
+  margin: 1.5rem 0 0.5rem;
+  overflow: hidden;
+}
+
+.progressBar {
+  background: linear-gradient(90deg, #8B6F5E, #6B5A4D);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.remaining {
+  font-size: 0.9rem;
+  color: #6B5A4D;
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #4a5568;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.actionButton.partialButton {
+  background: #f7f2ee;
+  color: #8B6F5E;
+  border-color: #d4c5bb;
+}
+
+.actionButton.fullButton {
+  background: #8B6F5E;
+  color: white;
+  border-color: #8B6F5E;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(20px);
+  animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.modal h3 {
+  color: #2d3748;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+}
+
+.modal p {
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.input, .textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.input:focus, .textarea:focus {
+  outline: none;
+  border-color: #8B6F5E;
+  box-shadow: 0 0 0 3px rgba(139, 111, 94, 0.1);
+}
+
+.inputError {
+  border-color: #e53e3e;
+}
+
+.inputError:focus {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+}
+
+.errorMessage {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 480px) {
+  .modal {
+    padding: 2rem;
+  }
+  
+  .modalActions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  
+  .cancelButton,
+  .confirmButton {
+    min-width: 120px;
+  }
+}
+
+.cancelButton, .confirmButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancelButton {
+  background: #f7f7f7;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+
+.cancelButton:hover {
+  background: #e2e8f0;
+}
+
+.confirmButton {
+  background: #8B6F5E;
+  color: white;
+  border: none;
+}
+
+.confirmButton:hover {
+  background: #6B5A4D;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Información bancaria */
+.bankInfo {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #8B6F5E;
+}
+
+.bankInfo h4 {
+  margin-top: 0;
+  color: #2d3748;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.bankInfo p {
+  margin: 0.4rem 0;
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.bankInfo p strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.bankInfo .note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #718096;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .giftCard {
+    flex: 0 0 260px;
+  }
+  
+  .giftCard h3 {
+    font-size: 1rem;
+  }
+  
+  .infoButton {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+}

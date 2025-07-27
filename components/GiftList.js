@@ -1,203 +1,303 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import styles from "../styles/giftList.module.css";
+import styles from "../styles/giftListV2.module.css";
+import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaInfoCircle, FaTimes } from "react-icons/fa";
 
-const initialGifts = [
-  {
-    id: 1,
-    name: "Hegas – Mueble TV 180 natural",
-    description: "Mueble de TV 180 cm en acabado natural.",
-    image: "/images/gifts/hegas-mueble-tv.jpg",
-    price: 330.65,
-    contributed: 0,
-    link: "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html?utm_source=Connectif&utm_medium=carrusel&utm_campaign=productosRecomendados",
-  },
-  {
-    id: 2,
-    name: "Sound – Sofá personalizable (chaise mediana izquierda)",
-    description: "Sofá modular cómodo con chaise longue mediana izquierda.",
-    image: "/images/gifts/sound-sofa.jpg",
-    price: 1199,
-    contributed: 0,
-    link: "https://kenayhome.com/es/13390-94931-sound-sofa-personalizable.html#/2772-astor_sofa_tamanos-sofa_chaise_mediana_izquierda/3844-colores_tapizados-hada_perla",
-  },
-  {
-    id: 3,
-    name: "Kolb – Zapatero natural",
-    description: "Zapatero estilo natural para mantener el orden.",
-    image: "/images/gifts/kolb-zapatero.jpg",
-    price: 269,
-    contributed: 0,
-    link: "https://kenayhome.com/es/16355-kolb-zapatero-natural.html",
-  },
-  {
-    id: 4,
-    name: "Lena – Espejo negro",
-    description: "Espejo decorativo acabado negro.",
-    image: "/images/gifts/lena-espejo.jpg",
-    price: 199,
-    contributed: 0,
-    link: "https://kenayhome.com/es/15288-lena-espejo-negro.html",
-  },
-  {
-    id: 5,
-    name: "Nais – Pack 2 taburetes tapizados gris",
-    description: "Taburetes tapizados en gris para la cocina.",
-    image: "/images/gifts/nais-taburetes.jpg",
-    price: 159.8,
-    contributed: 0,
-    link: "https://kenayhome.com/es/19851-nais-pack-2-taburetes-tapizados-gris.html",
-  },
-  {
-    id: 6,
-    name: "Low – Pack 2 sillas tapizadas gris claro (4 packs)",
-    description: "Necesitamos 8 sillas (4 packs de 2). Precio total mostrado.",
-    image: "/images/gifts/low-sillas.jpg",
-    price: 639.6,
-    contributed: 0,
-    link: "https://kenayhome.com/es/19642-low-pack-2-sillas-tapizadas-gris-claro.html?utm_source=Connectif&utm_medium=carrusel&utm_campaign=productosRecomendados",
-  },
-  {
-    id: 7,
-    name: "Crate – Puf personalizable",
-    description: "Puf personalizable para mayor confort.",
-    image: "/images/gifts/crate-puf.jpg",
-    price: 299,
-    contributed: 0,
-    link: "https://kenayhome.com/es/17689-95664-crate-puf-personalizable.html#/4343-colores_tapizados-kyrios_6_beige",
-  },
-  {
-    id: 8,
-    name: "Wavea – Lámpara de techo beige D.50",
-    description: "Lámpara de techo estilo natural diámetro 50 cm.",
-    image: "/images/gifts/wavea-lampara.jpg",
-    price: 44.99,
-    contributed: 0,
-    link: "https://www.maisonsdumonde.com/ES/es/p/lampara-de-techo-beige-d-50-wavea-238956.htm",
-  },
-];
-
-export default function GiftList() {
-  const [gifts, setGifts] = useState(initialGifts);
-  const [modalInfo, setModalInfo] = useState(null); // {giftId, type}
-
-  const openModal = (giftId, type) => setModalInfo({ giftId, type });
-  const closeModal = () => setModalInfo(null);
-
-  const handleConfirm = (name, message, amount) => {
-    setGifts((prev) =>
-      prev.map((g) =>
-        g.id === modalInfo.giftId
-          ? { ...g, contributed: Math.min(g.price, g.contributed + amount) }
-          : g
-      )
-    );
-    closeModal();
-  };
+function GiftCard({ gift, isExpanded, onToggle, onContribute }) {
+  const progress = Math.min(100, ((gift.contributed || 0) / gift.price) * 100);
+  const remaining = Math.max(0, gift.price - (gift.contributed || 0));
 
   return (
-    <div className={styles.grid}>
-      {gifts.map((gift) => {
-        const progress = Math.min(100, (gift.contributed / gift.price) * 100);
-        const remaining = Math.max(0, gift.price - gift.contributed);
-        return (
-          <div key={gift.id} className={styles.card}>
-            <div className={styles.imgWrapper}>
-              <Image
-                src={gift.image}
-                alt={gift.name}
-                width={300}
-                height={200}
-                className={styles.img}
-              />
+    <div className={`${styles.giftCard} ${isExpanded ? styles.expanded : ''}`}>
+      <div className={styles.cardFront}>
+        <div className={styles.imageContainer}>
+          <Image
+            src={gift.image || "/images/gifts/placeholder.jpg"}
+            alt={gift.name}
+            width={280}
+            height={200}
+            className={styles.image}
+          />
+        </div>
+        <div className={styles.cardContent}>
+          <h3>{gift.name}</h3>
+          <button 
+            className={styles.infoButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle(gift.id);
+            }}
+          >
+            <FaInfoCircle /> Más información
+          </button>
+        </div>
+      </div>
+      
+      {isExpanded && (
+        <div className={styles.cardBack}>
+          <button 
+            className={styles.closeButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggle(null);
+            }}
+          >
+            <FaTimes />
+          </button>
+          <div className={styles.details}>
+            <p className={styles.description}>{gift.description}</p>
+            <p className={styles.price}>Precio: €{gift.price.toFixed(2)}</p>
+            
+            <div className={styles.progressContainer}>
+              <div className={styles.progressBar} style={{ width: `${progress}%` }} />
             </div>
-            <h3>{gift.name}</h3>
-            <p>{gift.description}</p>
-            <p className={styles.price}>€{gift.price}</p>
-            <div className={styles.progressBarWrapper}>
-              <div
-                className={styles.progressBar}
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <p className={styles.remaining}>Quedan €{remaining}</p>
+            <p className={styles.remaining}>Faltan €{remaining.toFixed(2)}</p>
+            
             <div className={styles.actions}>
-              <button onClick={() => openModal(gift.id, "full")}>Regalar completo</button>
-              <button onClick={() => openModal(gift.id, "partial")}>Aportar parte</button>
-              <a href={gift.link} target="_blank" rel="noopener noreferrer">
-                Ver en tienda
+              <a 
+                href={gift.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={styles.actionButton}
+              >
+                <FaExternalLinkAlt /> Ver en tienda
               </a>
+              <button 
+                className={`${styles.actionButton} ${styles.partialButton}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onContribute(gift, 'partial');
+                }}
+              >
+                Aportar parte
+              </button>
+              <button 
+                className={`${styles.actionButton} ${styles.fullButton}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onContribute(gift, 'full');
+                }}
+              >
+                Regalar completo
+              </button>
             </div>
           </div>
-        );
-      })}
-
-}
-
-        <h3>Transferencia directa</h3>
-        <p>Si prefieres, puedes realizar una transferencia a la siguiente cuenta:</p>
-        <div className={styles.bank}>ES82 0186 5001 61 0525696201</div>
-        <button onClick={() => openModal(null, "transfer")}>Aportar</button>
-      </div>
-
-      {modalInfo && (
-        <Modal
-          info={modalInfo}
-          gift={gifts.find((g) => g.id === modalInfo.giftId)}
-          onClose={closeModal}
-          onConfirm={handleConfirm}
-        />
+        </div>
       )}
     </div>
   );
 }
 
-function Modal({ info, gift, onClose, onConfirm }) {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [amount, setAmount] = useState(
-    info.type === "full" ? gift.price - gift.contributed : 0
-  );
+export default function GiftList() {
+  const [gifts, setGifts] = useState([]);
+  const [expandedCard, setExpandedCard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [modalInfo, setModalInfo] = useState(null);
+  const [validationError, setValidationError] = useState('');
 
-  const submit = () => {
-    const numeric = Number(amount);
-    if (isNaN(numeric) || numeric <= 0) return;
-    onConfirm(name, message, numeric);
+  useEffect(() => {
+    const fetchGifts = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/gifts');
+        
+        if (!response.ok) {
+          throw new Error('Error al cargar los regalos');
+        }
+        
+        const data = await response.json();
+        setGifts(data.gifts || []);
+      } catch (err) {
+        console.error('Error:', err);
+        setError(err.message || 'Error al cargar los regalos');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGifts();
+  }, []);
+
+  const toggleCard = (cardId) => {
+    setExpandedCard(expandedCard === cardId ? null : cardId);
   };
 
+  const handleContribution = (gift, type) => {
+    const amount = type === 'full' ? (gift.price - (gift.contributed || 0)) : null;
+    setModalInfo({
+      giftId: gift.id,
+      giftName: gift.name,
+      type,
+      amount
+    });
+  };
+
+  const handleCloseModal = () => {
+    setModalInfo(null);
+    setValidationError('');
+  };
+
+  const handleConfirmContribution = async (name, message, amount) => {
+    try {
+      const response = await fetch('/api/gifts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          giftId: modalInfo.giftId,
+          name,
+          message,
+          amount: parseFloat(amount)
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al registrar la contribución');
+      }
+
+      // Actualizar la lista de regalos
+      const updatedGifts = gifts.map(gift => {
+        if (gift.id === modalInfo.giftId) {
+          return {
+            ...gift,
+            contributed: (gift.contributed || 0) + parseFloat(amount)
+          };
+        }
+        return gift;
+      });
+
+      setGifts(updatedGifts);
+      setModalInfo(null);
+      alert('¡Gracias por tu contribución!');
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Hubo un error al procesar tu contribución');
+    }
+  };
+
+  if (loading) {
+    return <div className={styles.loading}>Cargando regalos...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error}</div>;
+  }
+
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <button className={styles.close} onClick={onClose}>
-          ×
-        </button>
-        <h3>¡Gracias por tu regalo!</h3>
-        {gift && <p>{gift.name}</p>}
-        <label>
-          Tu nombre
-          <input value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label>
-          Mensaje opcional
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+    <div className={styles.giftListContainer}>
+      <div className={styles.carousel}>
+        {gifts.map((gift) => (
+          <GiftCard
+            key={gift.id}
+            gift={gift}
+            isExpanded={expandedCard === gift.id}
+            onToggle={toggleCard}
+            onContribute={handleContribution}
           />
-        </label>
-        {info.type !== "full" && (
-          <label>
-            Cantidad (€)
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-            />
-          </label>
-        )}
-        <button className={styles.confirm} onClick={submit}>
-          Confirmar
-        </button>
+        ))}
       </div>
+
+      {modalInfo && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3>Contribuir a {modalInfo.giftName}</h3>
+            <p>Ingresa tus datos para continuar:</p>
+            
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const name = formData.get('name').trim();
+              const message = formData.get('message')?.trim() || ''; // Mensaje opcional
+              let amount = modalInfo.amount;
+              
+              // Validar cantidad si es contribución parcial
+              if (modalInfo.type === 'partial') {
+                amount = parseFloat(formData.get('amount'));
+                const gift = gifts.find(g => g.id === modalInfo.giftId);
+                const remaining = gift.price - (gift.contributed || 0);
+                
+                if (isNaN(amount) || amount <= 0) {
+                  setValidationError('Por favor, introduce una cantidad válida');
+                  return;
+                }
+                
+                if (amount > remaining) {
+                  setValidationError(`La cantidad no puede ser mayor a €${remaining.toFixed(2)}`);
+                  return;
+                }
+              }
+              
+              handleConfirmContribution(name, message, amount);
+            }}>
+              <div className={styles.formGroup}>
+                <label htmlFor="name">Tu nombre:</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  className={styles.input}
+                />
+              </div>
+              
+              <div className={styles.formGroup}>
+                <label htmlFor="message">Mensaje (opcional):</label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="3"
+                  className={styles.textarea}
+                />
+              </div>
+              
+              {modalInfo.type === 'partial' && (
+                <div className={styles.formGroup}>
+                  <label htmlFor="amount">Cantidad a aportar (€):</label>
+                  <input 
+                    type="number" 
+                    id="amount" 
+                    name="amount" 
+                    min="0.01"
+                    max={modalInfo.amount}
+                    step="0.01"
+                    required
+                    className={`${styles.input} ${validationError ? styles.inputError : ''}`}
+                    onChange={() => setValidationError('')}
+                  />
+                  {validationError && (
+                    <p className={styles.errorMessage}>{validationError}</p>
+                  )}
+                </div>
+              )}
+              
+              <div className={styles.bankInfo}>
+                <h4>Datos de la cuenta bancaria:</h4>
+                <p><strong>Titular:</strong> Gustavo Terrer y Laura Barrachina</p>
+                <p><strong>IBAN:</strong> ES82 0186 5001 6105 2569 6201</p>
+                <p className={styles.note}>Por favor, indica tu nombre en el concepto de la transferencia.</p>
+              </div>
+
+              <div className={styles.modalActions}>
+                <button 
+                  type="button" 
+                  onClick={handleCloseModal}
+                  className={styles.cancelButton}
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit"
+                  className={styles.confirmButton}
+                >
+                  Confirmar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

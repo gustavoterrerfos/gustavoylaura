@@ -1,188 +1,210 @@
-import { useState } from "react";
-import Image from "next/image";
-import styles from "../styles/giftList.module.css";
-
-const initialGifts = [
-  {
-    id: 1,
-    name: "Hegas – Mueble TV 180 natural",
-    description: "Mueble de TV 180 cm en acabado natural.",
-    image: "/images/Mueble Televisor.jpg",
-    price: 330.65,
-    contributed: 0,
-    link: "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html?utm_source=Connectif&utm_medium=carrusel&utm_campaign=productosRecomendados",
-  },
-  {
-    id: 2,
-    name: "Sound – Sofá personalizable",
-    description: "Sofá chaise longue mediana izquierda personalizable.",
-    image: "/images/Sofá.jpg",
-    price: 1599,
-    contributed: 0,
-    link: "https://kenayhome.com/es/15124-sound-sofa-chaise-mediana-izquierda.html",
-  },
-  {
-    id: 3,
-    name: "Kolb – Zapatero natural",
-    description: "Mueble zapatero acabado natural.",
-    image: "/images/Zapatero.jpg",
-    price: 219,
-    contributed: 0,
-    link: "https://kenayhome.com/es/17436-kolb-zapatero-natural.html",
-  },
-  {
-    id: 4,
-    name: "Lena – Espejo negro",
-    description: "Espejo decorativo acabado negro.",
-    image: "/images/espejo.jpg",
-    price: 199,
-    contributed: 0,
-    link: "https://kenayhome.com/es/15288-lena-espejo-negro.html",
-  },
-  {
-    id: 5,
-    name: "Nais – Pack 2 taburetes gris",
-    description: "Pack de 2 taburetes tapizados en gris.",
-    image: "/images/Taburete.jpg",
-    price: 159.8,
-    contributed: 0,
-    link: "https://kenayhome.com/es/19120-nais-taburete-tapizado-gris.html",
-  },
-  {
-    id: 7,
-    name: "Low – Silla tapizada gris",
-    description: "Silla tapizada en gris con patas de madera.",
-    image: "/images/Silla.jpg",
-    price: 129,
-    contributed: 0,
-    link: "https://kenayhome.com/es/18165-low-silla-tapizada-gris.html",
-  },
-  {
-    id: 8,
-    name: "Wavea – Lámpara techo Ø50",
-    description: "Lámpara de techo beige 50 cm.",
-    image: "/images/lampara-de-techo.jpg",
-    price: 109,
-    contributed: 0,
-    link: "https://www.maisonsdumonde.com/ES/es/p/lampara-de-techo-beige-d-50-wavea-238956.htm",
-  },
-];
+import { useState, useEffect } from 'react';
+import styles from './giftList.module.css';
 
 export default function GiftCarousel() {
-  const [gifts, setGifts] = useState(initialGifts);
-  const [modalInfo, setModalInfo] = useState(null); // {giftId, type}
+  const [gifts, setGifts] = useState([]);
+  const [modalInfo, setModalInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const openModal = (giftId, type) => setModalInfo({ giftId, type });
-  const closeModal = () => setModalInfo(null);
+  useEffect(() => {
+    fetchGifts();
+  }, []);
 
-  const handleConfirm = (name, message, amount) => {
-    setGifts(prev =>
-      prev.map(g =>
-        g.id === modalInfo.giftId
-          ? { ...g, contributed: Math.min(g.price, g.contributed + amount) }
-          : g
-      )
-    );
-    closeModal();
+  const fetchGifts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch('/api/gifts');
+      
+      if (!response.ok) {
+        throw new Error('Error en la respuesta de la API: ' + response.status);
+      }
+
+      const data = await response.json();
+      
+      if (!data || !data.gifts) {
+        throw new Error('Respuesta de la API inválida');
+      }
+
+      setGifts(data.gifts.map(gift => ({
+        ...gift,
+        price: parseFloat(gift.price),
+        contributed: parseFloat(gift.contributed),
+        contributors: []
+      })));
+    } catch (err) {
+      setError(err.message || 'Error al cargar los regalos');
+      console.error('Error en fetchGifts:', err);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleOpenModal = (gift) => {
+    setModalInfo({
+      giftId: gift.id,
+      giftName: gift.name,
+      giftPrice: gift.price,
+      giftContributed: gift.contributed,
+      giftLink: gift.link
+    });
+  };
+
+  const handleCloseModal = () => {
+    setModalInfo(null);
+  };
+
+  const handleConfirm = async (name, message, amount) => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      if (!modalInfo || !modalInfo.giftId) {
+        throw new Error('Información del regalo no válida');
+      }
+
+      const numericAmount = parseFloat(amount);
+      if (isNaN(numericAmount) || numericAmount <= 0) {
+        throw new Error('Cantidad inválida');
+      }
+
+      const response = await fetch('/api/gifts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          giftId: modalInfo.giftId,
+          name,
+          message,
+          amount: numericAmount
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al registrar la contribución');
+      }
+
+      const data = await response.json();
+      if (!data || !data.success) {
+        throw new Error('Respuesta de la API inválida');
+      }
+
+      // Actualizar el estado local
+      setGifts(prev =>
+        prev.map(g =>
+          g.id === modalInfo.giftId
+            ? {
+                ...g,
+                contributed: Math.min(g.price, g.contributed + numericAmount)
+              }
+            : g
+        )
+      );
+    } catch (err) {
+      setError(err.message || 'Error al registrar la contribución');
+      console.error('Error en handleConfirm:', err);
+    } finally {
+      setLoading(false);
+      handleCloseModal();
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className={styles.grid}>
+        <div className={styles.card}>
+          <p>Cargando regalos...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.grid}>
+        <div className={styles.card}>
+          <p>Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.grid}>
-      {gifts.map(gift => {
-        const progress = Math.min(100, (gift.contributed / gift.price) * 100);
-        const remaining = (gift.price - gift.contributed).toFixed(2);
-
-        return (
-          <div key={gift.id} className={styles.card}>
-            <div className={styles.imgWrapper}>
-              <Image
-                src={gift.image}
-                alt={gift.name}
-                width={300}
-                height={200}
-                className={styles.img}
-              />
+      {gifts.map((gift) => (
+        <div key={gift.id} className={styles.card}>
+          <div className={styles.imgWrapper}>
+            <img src={gift.image} alt={gift.name} className={styles.img} />
+          </div>
+          <h3>{gift.name}</h3>
+          <p>{gift.description}</p>
+          <div className={styles.price}>{gift.price}€</div>
+          <div className={styles.contribution}>
+            <div className={styles.contributionBar}>
+              <div className={styles.contributionProgress} style={{ width: `${(gift.contributed / gift.price) * 100}%` }}></div>
             </div>
-            <h3>{gift.name}</h3>
-            <p>{gift.description}</p>
-            <p className={styles.price}>€{gift.price}</p>
-            <div className={styles.progressBarWrapper}>
-              <div
-                className={styles.progressBar}
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <p className={styles.remaining}>Quedan €{remaining}</p>
-            <div className={styles.actions}>
-              {remaining > 0 && (
-                <>
-                  <button onClick={() => openModal(gift.id, "full")}>Regalar completo</button>
-                  <button onClick={() => openModal(gift.id, "partial")}>Aportar parte</button>
-                </>
-              )}
-              <a href={gift.link} target="_blank" rel="noopener noreferrer">
-                Ver en tienda
-              </a>
+            <div className={styles.contributionText}>
+              {gift.contributed}€ de {gift.price}€
             </div>
           </div>
-        );
-      })}
+          <div className={styles.actions}>
+            <button onClick={() => handleOpenModal(gift)}>
+              {gift.contributed === 0 ? 'Regalar completo' : 'Aportar parte'}
+            </button>
+            <a href={gift.link} target='_blank' rel='noopener noreferrer'>
+              Ver en tienda
+            </a>
+          </div>
+        </div>
+      ))}
 
       {modalInfo && (
-        <Modal
-          info={modalInfo}
-          gift={gifts.find(g => g.id === modalInfo.giftId)}
-          onClose={closeModal}
-          onConfirm={handleConfirm}
-        />
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Contribuir a {modalInfo.giftName}</h2>
+            <div className={styles.modalGiftInfo}>
+              <div className={styles.modalPrice}>
+                <span>Precio total:</span>
+                <strong>{modalInfo.giftPrice}€</strong>
+              </div>
+              <div className={styles.modalContributed}>
+                <span>Contribuido:</span>
+                <strong>{modalInfo.giftContributed}€</strong>
+              </div>
+            </div>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const name = formData.get('name');
+              const message = formData.get('message');
+              const amount = parseFloat(formData.get('amount'));
+              handleConfirm(name, message, amount);
+            }}>
+              <div className={styles.modalForm}>
+                <div className={styles.modalFormField}>
+                  <label htmlFor='name'>Nombre:</label>
+                  <input type='text' id='name' name='name' required />
+                </div>
+                <div className={styles.modalFormField}>
+                  <label htmlFor='message'>Mensaje (opcional):</label>
+                  <textarea id='message' name='message'></textarea>
+                </div>
+                <div className={styles.modalFormField}>
+                  <label htmlFor='amount'>Cantidad:</label>
+                  <input type='number' id='amount' name='amount' step='0.01' required />
+                </div>
+                <div className={styles.modalFormActions}>
+                  <button type='submit'>Confirmar contribución</button>
+                  <button type='button' onClick={handleCloseModal}>Cancelar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       )}
-    </div>
-  );
-}
-
-function Modal({ info, gift, onClose, onConfirm }) {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [amount, setAmount] = useState(
-    info.type === "full" ? gift.price - gift.contributed : ""
-  );
-
-  const submit = () => {
-    const numeric = Number(amount);
-    if (isNaN(numeric) || numeric <= 0) return;
-    onConfirm(name, message, numeric);
-  };
-
-  return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modal}>
-        <button className={styles.close} onClick={onClose}>
-          ×
-        </button>
-        <h3>¡Gracias por tu regalo!</h3>
-        <p>{gift.name}</p>
-        <label>
-          Tu nombre
-          <input value={name} onChange={e => setName(e.target.value)} />
-        </label>
-        <label>
-          Mensaje opcional
-          <textarea value={message} onChange={e => setMessage(e.target.value)} />
-        </label>
-        {info.type !== "full" && (
-          <label>
-            Cantidad (€)
-            <input
-              type="number"
-              value={amount}
-              onChange={e => setAmount(e.target.value)}
-            />
-          </label>
-        )}
-        <button className={styles.confirm} onClick={submit}>
-          Confirmar
-        </button>
-      </div>
     </div>
   );
 }
