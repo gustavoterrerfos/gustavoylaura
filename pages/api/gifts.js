@@ -76,16 +76,44 @@ const giftsData = {
 
 // API Route de Next.js
 export default function handler(req, res) {
+  console.log('Solicitud recibida en /api/gifts', { method: req.method });
+  
   if (req.method === 'GET') {
     try {
+      console.log('Procesando solicitud GET para /api/gifts');
+      
+      // Verificar que los datos estén presentes
+      if (!giftsData || !giftsData.gifts) {
+        console.error('Error: No se encontraron datos de regalos');
+        return res.status(500).json({ 
+          error: 'Error interno del servidor',
+          details: 'No se encontraron datos de regalos'
+        });
+      }
+      
+      console.log(`Devolviendo ${giftsData.gifts.length} regalos`);
+      
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(giftsData);
+      return res.status(200).json(giftsData);
+      
     } catch (error) {
-      console.error('Error en la API de regalos:', error);
-      res.status(500).json({ error: 'Error al obtener los regalos' });
+      console.error('Error en la API de regalos:', {
+        message: error.message,
+        stack: error.stack,
+        error: JSON.stringify(error, Object.getOwnPropertyNames(error))
+      });
+      
+      return res.status(500).json({ 
+        error: 'Error al obtener los regalos',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      });
     }
-  } else {
-    res.setHeader('Allow', ['GET']);
-    res.status(405).end(`Método ${req.method} no permitido`);
   }
+  
+  // Si el método no es GET
+  res.setHeader('Allow', ['GET']);
+  return res.status(405).json({ 
+    error: `Método ${req.method} no permitido`,
+    allowed: ['GET']
+  });
 }
