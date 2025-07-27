@@ -1,4 +1,5 @@
-export const giftsData = {
+// Datos estáticos de regalos
+const giftsData = {
   gifts: [
     {
       id: 1,
@@ -72,3 +73,19 @@ export const giftsData = {
     }
   ]
 };
+
+// API Route de Next.js
+export default function handler(req, res) {
+  if (req.method === 'GET') {
+    try {
+      res.setHeader('Content-Type', 'application/json');
+      res.status(200).json(giftsData);
+    } catch (error) {
+      console.error('Error en la API de regalos:', error);
+      res.status(500).json({ error: 'Error al obtener los regalos' });
+    }
+  } else {
+    res.setHeader('Allow', ['GET']);
+    res.status(405).end(`Método ${req.method} no permitido`);
+  }
+}
