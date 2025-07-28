@@ -52,7 +52,14 @@ export default function AddressesSection() {
         .section-title {
           text-align: center;
           width: 100%;
-          margin-bottom: 2rem;
+          margin: 0 auto 2rem;
+          font-size: 2.25rem;
+          color: #6B8E7E;
+          font-family: 'Playfair Display', serif;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          position: relative;
+          padding-bottom: 0.5rem;
         }
         
         .addresses-container {

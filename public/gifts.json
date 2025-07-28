@@ -3,17 +3,17 @@
     {
       "id": 1,
       "name": "Hegas – Mueble TV 180 natural",
-      "description": "Mueble de TV 180 cm en acabado natural.",
+      "description": "Mueble de TV 180 cm en acabado natural, perfecto para el salón.",
       "image": "/images/Mueble Televisor.jpg",
       "price": 330.65,
       "contributed": 0,
-      "link": "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html?utm_source=Connectif&utm_medium=carrusel&utm_campaign=productosRecomendados",
+      "link": "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html",
       "contributors": []
     },
     {
       "id": 2,
       "name": "Sound – Sofá personalizable",
-      "description": "Sofá chaise longue mediana izquierda personalizable.",
+      "description": "Sofá chaise longue mediana izquierda, ideal para descansar juntos.",
       "image": "/images/Sofa.jpg",
       "price": 1599,
       "contributed": 0,
@@ -23,7 +23,7 @@
     {
       "id": 3,
       "name": "Kolb – Zapatero natural",
-      "description": "Mueble zapatero acabado natural.",
+      "description": "Mueble zapatero en acabado natural para mantener el orden en la entrada.",
       "image": "/images/Zapatero.jpg",
       "price": 219,
       "contributed": 0,
@@ -33,7 +33,7 @@
     {
       "id": 4,
       "name": "Lena – Espejo negro",
-      "description": "Espejo decorativo acabado negro.",
+      "description": "Elegante espejo negro para el recibidor o el dormitorio.",
       "image": "/images/espejo.jpg",
       "price": 199,
       "contributed": 0,
@@ -43,11 +43,41 @@
     {
       "id": 5,
       "name": "Nais – Pack 2 taburetes gris",
-      "description": "Pack de 2 taburetes tapizados en gris.",
+      "description": "Dos prácticos taburetes tapizados en gris para la isla de la cocina.",
       "image": "/images/Taburete.jpg",
       "price": 159.8,
       "contributed": 0,
       "link": "https://kenayhome.com/es/19120-nais-taburete-tapizado-gris.html",
+      "contributors": []
+    },
+    {
+      "id": 6,
+      "name": "Silla de comedor blanca",
+      "description": "Elegante silla blanca para el comedor, cómoda y moderna.",
+      "image": "/images/Silla.jpg",
+      "price": 129.95,
+      "contributed": 0,
+      "link": "#",
+      "contributors": []
+    },
+    {
+      "id": 7,
+      "name": "Puff tejido gris",
+      "description": "Cómodo puff tejido en tono gris, perfecto como asiento adicional.",
+      "image": "/images/Puff.jpg",
+      "price": 89.95,
+      "contributed": 0,
+      "link": "#",
+      "contributors": []
+    },
+    {
+      "id": 8,
+      "name": "Lámpara de techo moderna",
+      "description": "Diseñada para iluminar con estilo cualquier estancia de la casa.",
+      "image": "/images/lampara-de-techo.jpg",
+      "price": 149.99,
+      "contributed": 0,
+      "link": "#",
       "contributors": []
     },
     {

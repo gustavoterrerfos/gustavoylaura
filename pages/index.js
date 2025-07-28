@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import styled from 'styled-components';
 import HeroSection from '../components/HeroSection';
 import InvitationSection from '../components/InvitationSection';
 import EventDetails from '../components/EventDetails';
@@ -8,21 +7,7 @@ import AddressesSection from '../components/AddressesSection';
 import GiftsSection from '../components/GiftsSection';
 import ThanksSection from '../components/ThanksSection';
 
-const Main = styled.main`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1.5rem 3rem 1.5rem;
-  background: #fffdf9;
-`;
-
-import { useEffect } from 'react';
-
 export default function Home() {
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('../public/sectionSnap.js');
-    }
-  }, []);
   return (
     <>
       <Head>
@@ -36,40 +21,44 @@ export default function Home() {
       </nav>
       <HeroSection />
       <InvitationSection />
-      <Main>
+      <div style={{
+        maxWidth: '900px',
+        margin: '0 auto',
+        padding: '0 1.5rem 3rem 1.5rem',
+        background: '#fffdf9'
+      }}>
         <section id="evento"><EventDetails /></section>
         <section id="rsvp-section-anchor" className="rsvp-section"><RSVPSection /></section>
         <section id="d"><AddressesSection /></section>
-        <section id="regalos"><GiftsSection /></section>
-        <ThanksSection />
-      </Main>
-       <style jsx global>{`
+      </div>
+      <section id="regalos"><GiftsSection /></section>
+      <ThanksSection />
+      <style jsx global>{`
         html {
           scroll-behavior: smooth;
         }
-        .sticky-nav {
+        nav {
           position: sticky;
           top: 0;
-          z-index: 999;
-          background: rgba(245, 249, 246, 0.95);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          padding: 1rem 0;
+          z-index: 1000;
+          width: 100%;
           display: flex;
           justify-content: center;
-          gap: 2.5rem;
-          padding: 0.75rem 0;
-          box-shadow: 0 2px 8px rgba(191,167,106,0.04);
         }
         .sticky-nav a {
           color: #6B8E7E;
           font-family: 'Lato', 'Open Sans', Arial, sans-serif;
           font-weight: 600;
+          font-size: 1.1rem;
+          margin: 0 1.2rem;
           text-decoration: none;
-          font-size: 1.08rem;
-          border-bottom: 2px solid transparent;
-          transition: border 0.2s, color 0.2s;
+          transition: color 0.2s;
         }
         .sticky-nav a:hover {
-          color: #8BA393;
-          border-bottom: 2px solid #8BA393;
+          color: #BFA76A;
         }
         section {
           scroll-margin-top: 72px;
