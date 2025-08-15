@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Hegas – Mueble TV 180 natural",
       "description": "Mueble de TV 180 cm en acabado natural, perfecto para el salón.",
-      "image": "/images/Mueble Televisor.jpg",
+      "image": "/images/Mueble-TV.jpg",
       "price": 330.65,
       "contributed": 0,
       "link": "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html",
@@ -81,7 +81,7 @@
       "contributors": []
     },
     {
-      "id": 7,
+      "id": 9,
       "name": "Low – Silla tapizada gris",
       "description": "Silla tapizada en gris con patas de madera.",
       "image": "/images/Silla.jpg",
@@ -91,7 +91,7 @@
       "contributors": []
     },
     {
-      "id": 8,
+      "id": 10,
       "name": "Wavea – Lámpara techo Ø50",
       "description": "Lámpara de techo beige 50 cm.",
       "image": "/images/lampara-de-techo.jpg",
