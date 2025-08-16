@@ -16,8 +16,7 @@ export default function GiftsSection() {
         <div className="gifts-content fade-in" ref={fadeRef}>
           <h2 className="section-title" style={{ marginBottom: '1.5rem', color: '#8B6F5E' }}>Nuestro proyecto familiar</h2>
           <p style={{marginBottom:'1.2em', lineHeight: '1.7', fontSize: '1.05em', color: '#6B8E7E'}}>
-            Lo más importante para nosotros es contar con tu compañía y tus oraciones en este día tan especial.
-            Pero si además queréis tener un detalle, cualquier ayuda para nuestro proyecto familiar será recibida con mucho cariño.
+            Lo más importante para nosotros es contar con tu compañía y tus oraciones en este día tan especial. Pero si además queréis tener un detalle, cualquier ayuda para nuestro proyecto familiar será recibida con mucho cariño. Si lo preferís, os dejamos aquí algunas ideas para ayudarnos con nuestro hogar!
           </p>
           
           {!showGifts ? (
