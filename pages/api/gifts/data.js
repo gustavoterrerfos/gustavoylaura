@@ -4,7 +4,7 @@ export const giftsData = {
       id: 1,
       name: "Hegas – Mueble TV 180 natural",
       description: "Mueble de TV 180 cm en acabado natural.",
-      image: "/images/Mueble Televisor.jpg",
+      image: "/images/mueble-tv.jpg",
       price: 330.65,
       contributed: 0,
       link: "https://kenayhome.com/es/17438-hegas-mueble-tv-180-natural.html?utm_source=Connectif&utm_medium=carrusel&utm_campaign=productosRecomendados",
@@ -68,6 +68,46 @@ export const giftsData = {
       price: 109,
       contributed: 0,
       link: "https://www.maisonsdumonde.com/ES/es/p/lampara-de-techo-beige-d-50-wavea-238956.htm",
+      contributors: []
+    },
+    {
+      id: 9,
+      name: "Mesita de centro",
+      description: "Mesita de centro moderna y funcional.",
+      image: "/images/mesas-de-centro.jpg",
+      price: 199,
+      contributed: 0,
+      link: "#",
+      contributors: []
+    },
+    {
+      id: 10,
+      name: "Mesita de noche",
+      description: "Mesita de noche con cajón.",
+      image: "/images/Meista de noche.jpg",
+      price: 89,
+      contributed: 0,
+      link: "#",
+      contributors: []
+    },
+    {
+      id: 11,
+      name: "Alfombra de dormitorio",
+      description: "Alfombra suave para el dormitorio.",
+      image: "/images/Alfombra.jpg",
+      price: 129,
+      contributed: 0,
+      link: "#",
+      contributors: []
+    },
+    {
+      id: 12,
+      name: "Lámpara de comedor",
+      description: "Elegante lámpara para el comedor.",
+      image: "/images/Lampara-comedor.jpg",
+      price: 149,
+      contributed: 0,
+      link: "#",
       contributors: []
     }
   ]

@@ -330,10 +330,7 @@ export default function GiftList() {
       )}
       
       <div className={styles.bankInfoFixed}>
-        <h4>O si lo prefieres, puedes hacer una transferencia directa:</h4>
-        <p><strong>Titular:</strong> Gustavo Terrer y Laura Barrachina</p>
-        <p><strong>IBAN:</strong> ES82 0186 5001 6105 2569 6201</p>
-        <p className={styles.note}>Por favor, indica tu nombre en el concepto de la transferencia.</p>
+        <p> <strong>ES82 0186 5001 6105 2569 6201</strong></p>
       </div>
     </div>
   );

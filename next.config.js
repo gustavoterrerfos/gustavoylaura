@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['localhost'],
+    path: '/_next/image',
+    loader: 'default',
+    unoptimized: process.env.NODE_ENV !== 'production',
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Don't include node modules in the client bundle
